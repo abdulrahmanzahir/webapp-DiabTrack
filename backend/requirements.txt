@@ -8,3 +8,4 @@ sqlalchemy
 python-dotenv
 pydantic
 openai
+pydantic[email]
