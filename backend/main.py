@@ -29,7 +29,7 @@ from database_utils import save_patient_data_and_prediction  # ✅ NEW IMPORT
 # ───── Load Environment Variables ─────
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
-openai_client = openai.OpenAI(api_key=openai_api_key)
+openai.api_key = openai_api_key
 
 # ───── FastAPI App Initialization ─────
 app = FastAPI()
