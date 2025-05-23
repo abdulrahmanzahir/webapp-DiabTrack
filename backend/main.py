@@ -100,7 +100,7 @@ async def chat_api(request: ChatRequest):
         }
         full_messages = [system_prompt] + request.messages
 
-        response = openai_client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="ft:gpt-3.5-turbo-1106:personal:reemai-t2d-guardrails2:BUvwBF3G",
             messages=full_messages,
             max_tokens=300,
