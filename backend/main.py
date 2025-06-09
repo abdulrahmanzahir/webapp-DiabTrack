@@ -37,9 +37,9 @@ app = FastAPI()
 # ───── Enable CORS ─────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["webapp-frontend-h4h4.vercel.app",
-                   "webapp-frontend-h4h4-p7golf4hn-abdulrahman-zahirs-projects.vercel.app",
-                          "https://*.vercel.app",                    
+    allow_origins=["webapp-frontend-h4h4.vercel.app/",
+                   "https://webapp-frontend-voa8.vercel.app/",
+                          "https://*.vercel.app/",                    
     ],
     allow_credentials=True,
     allow_methods=["*"],
