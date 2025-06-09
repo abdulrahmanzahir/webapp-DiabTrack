@@ -24,7 +24,7 @@ from schemas import (
 )
 from auth import authenticate_user, create_access_token, register_user
 from models import User as DBUser
-from database_utils import save_patient_data_and_prediction  # ✅ NEW IMPORT
+from database_utils import save_patient_data_and_prediction
 
 # ───── Load Environment Variables ─────
 load_dotenv()
@@ -37,7 +37,9 @@ app = FastAPI()
 # ───── Enable CORS ─────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["webapp-frontend-h4h4.vercel.app"],
+    allow_origins=["webapp-frontend-h4h4.vercel.app",
+                          "https://*.vercel.app",                    
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
