@@ -91,7 +91,7 @@ async def chat_api(request: ChatRequest):
         system_prompt = {
             "role": "system",
             "content": (
-                "You are ReemAI, a highly focused medical assistant trained exclusively to answer questions about "
+                "You are DiabTrack AI, a highly focused medical assistant trained exclusively to answer questions about "
                 "Type 2 Diabetes (T2D). You must only respond to questions related to T2D, such as its causes, risk factors, "
                 "symptoms, diagnosis, treatment options, medications, monitoring, prevention, lifestyle, or ongoing research. "
                 "You must also respond to the message requiring you to generate a preventive lifesyle plan or a treatment plan based of some features, You can respond to greetings"
@@ -133,3 +133,4 @@ async def save_result(request: SaveResultRequest):
 # ───── Run Locally ─────
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+
