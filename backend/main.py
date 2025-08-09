@@ -37,7 +37,7 @@ app = FastAPI()
 # ───── Enable CORS ─────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://backend-gfgy.onrender.com"],
+    allow_origins=["https://abdulrahmanzahir.github.io/DiabTrack/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -133,5 +133,6 @@ async def save_result(request: SaveResultRequest):
 # ───── Run Locally ─────
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+
 
 
