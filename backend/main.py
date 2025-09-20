@@ -35,14 +35,20 @@ openai.api_key = openai_api_key
 app = FastAPI()
 
 # ───── Enable CORS ─────
+origins = [
+    "https://webapp-frontend-voa8.vercel.app",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://webapp-frontend-voa8.vercel.app"
-    ],
+    allow_origins=origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",  # allow Vercel preview URLs
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # ───── Initialize Database ─────
@@ -134,6 +140,7 @@ async def save_result(request: SaveResultRequest):
 # ───── Run Locally ─────
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+
 
 
 
