@@ -64,7 +64,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
         raise HTTPException(status_code=401, detail="Incorrect password.")
     user = result
     access_token = create_access_token(data={"sub": user.username})
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "user_id": user.id}
 
 @app.get("/user/me", response_model=UserOut)
 def get_user_me(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
@@ -116,6 +116,7 @@ class SaveResultRequest(BaseModel):
     formData: dict
     prediction: str
     confidence: float
+    user_id: int = None
 
 @app.post("/save-result")
 async def save_result(request: SaveResultRequest):
@@ -123,7 +124,8 @@ async def save_result(request: SaveResultRequest):
         save_patient_data_and_prediction(
             request.formData,
             request.prediction,
-            request.confidence
+            request.confidence,
+            request.user_id
         )
         return {"message": "Data saved successfully"}
     except Exception as e:

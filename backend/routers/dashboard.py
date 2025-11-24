@@ -4,19 +4,34 @@ import sqlite3
 router = APIRouter()
 
 @router.get("/dashboard-latest")
-def get_dashboard_data():
+def get_dashboard_data(user_id: int = None):
     conn = sqlite3.connect("diabetes_prediction.db")
     cursor = conn.cursor()
-    cursor.execute("""
-        SELECT 
-            p.glucose,
-            p.bmi,
-            r.prediction,
-            r.confidence
-        FROM patient_data p
-        JOIN prediction_result r ON p.patient_id = r.patient_id
-        ORDER BY r.result_id DESC LIMIT 1;
-    """)
+    
+    if user_id:
+        cursor.execute("""
+            SELECT 
+                p.glucose,
+                p.bmi,
+                r.prediction,
+                r.confidence
+            FROM patient_data p
+            JOIN prediction_result r ON p.patient_id = r.patient_id
+            WHERE p.user_id = ?
+            ORDER BY r.result_id DESC LIMIT 1;
+        """, (user_id,))
+    else:
+        cursor.execute("""
+            SELECT 
+                p.glucose,
+                p.bmi,
+                r.prediction,
+                r.confidence
+            FROM patient_data p
+            JOIN prediction_result r ON p.patient_id = r.patient_id
+            ORDER BY r.result_id DESC LIMIT 1;
+        """)
+    
     row = cursor.fetchone()
     conn.close()
 

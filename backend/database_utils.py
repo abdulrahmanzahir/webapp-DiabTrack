@@ -1,6 +1,6 @@
 import sqlite3
 
-def save_patient_data_and_prediction(form_data: dict, prediction: str, confidence: float):
+def save_patient_data_and_prediction(form_data: dict, prediction: str, confidence: float, user_id: int = None):
     conn = sqlite3.connect("diabetes_prediction.db")
     cursor = conn.cursor()
 
@@ -20,15 +20,15 @@ def save_patient_data_and_prediction(form_data: dict, prediction: str, confidenc
         form.get("pvalue_mlog"), form.get("effect_size"), form.get("ci_lower_bound"), form.get("ci_upper_bound")
     ]
 
-    # Insert clinical + genetic data
+    # Insert clinical + genetic data with user_id
     cursor.execute("""
         INSERT INTO patient_data (
-            age, pulse_rate, systolic_bp, diastolic_bp, glucose, cholesterol, hdl, bmi,
+            user_id, age, pulse_rate, systolic_bp, diastolic_bp, glucose, cholesterol, hdl, bmi,
             family_diabetes, hypertensive, family_hypertension, cardiovascular_disease,
             stroke, gender, chr_id, intergenic, risk_allele_frequency,
             p_value_mlog, effect_size, ci_lower, ci_upper
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, clinical_data + genetic_data)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, [user_id] + clinical_data + genetic_data)
 
     patient_id = cursor.lastrowid  # get the inserted patient ID
 
