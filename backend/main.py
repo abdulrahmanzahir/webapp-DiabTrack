@@ -37,10 +37,16 @@ app = FastAPI()
 # ───── Enable CORS ─────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],          # TEMP: allow all
-    allow_credentials=False,      # must be False when using "*"
+    allow_origins=[
+        "https://diabtrack.vercel.app",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://*.vercel.app"
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # ───── Initialize Database ─────
